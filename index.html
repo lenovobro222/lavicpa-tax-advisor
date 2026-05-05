@@ -946,17 +946,61 @@ The IRS allows immediate expensing of items costing $2,500 or less per invoice u
 Major renovation costs can be run through a cost segregation study to reclassify components into shorter depreciation lives, dramatically accelerating deductions.
 
 LaViCPA reviews all property expenses annually to ensure maximum immediate deductions and proper capitalization of improvements.`
+
+  'save tax|tax saving|ways to save|reduce my tax|lower my tax|tax tips|tax advice|real estate tax|property tax strategy|real estate invest': `## Real Estate Tax Savings — Top Strategies
+
+Real estate offers more tax advantages than almost any other asset class. Here are the most powerful strategies:
+
+**1. Depreciation**
+Deduct the cost of your building over 27.5 years (residential) or 39 years (commercial) — even while the property appreciates. A $500K building generates ~$18K/year in deductions automatically.
+
+**2. Cost Segregation**
+Accelerate depreciation by reclassifying components into 5, 7, and 15-year property. Combined with 60% bonus depreciation in 2024, this can create massive first-year write-offs.
+
+**3. 1031 Exchange**
+Sell a property and defer 100% of capital gains taxes by rolling proceeds into a new property. Repeat indefinitely — taxes can be deferred for a lifetime.
+
+**4. Real Estate Professional Status**
+Log 750+ hours per year in real estate activities and losses become fully deductible against all income — including W-2 wages. One of the most powerful strategies for high earners.
+
+**5. Short-Term Rental Exception**
+Airbnb-style properties (average stay 7 days or less) with material participation generate active losses that offset ordinary income — no passive loss limitations.
+
+**6. Opportunity Zones**
+Invest capital gains into a Qualified Opportunity Fund. Hold 10+ years and all appreciation on the new investment is completely tax-free.
+
+**7. Stepped-Up Basis at Death**
+Hold appreciated properties until death — heirs inherit at current market value with zero embedded gains or recapture.
+
+**8. Cash-Out Refinancing**
+Pull equity out of appreciated properties completely tax-free. Loan proceeds are not income, so you access wealth without triggering taxes.
+
+LaViCPA builds a comprehensive real estate tax strategy around each client's portfolio, income level, and long-term goals.`,
+
 };
 
 function findAnswer(q) {
-  const normalized = q.toLowerCase().replace(/[^a-z0-9 |]/g, ' ').trim();
+  const normalized = q.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').trim();
+  // First pass: exact keyword match
   for (const [key, val] of Object.entries(ANSWERS)) {
     const variants = key.split('|');
     for (const variant of variants) {
       if (normalized.includes(variant.trim())) return val;
     }
   }
-  return null;
+  // Second pass: word overlap scoring
+  let bestMatch = null;
+  let bestScore = 0;
+  const qWords = normalized.split(' ').filter(w => w.length > 3);
+  for (const [key, val] of Object.entries(ANSWERS)) {
+    const keyWords = key.replace(/[|]/g, ' ').split(' ').filter(w => w.length > 3);
+    const score = qWords.filter(w => keyWords.includes(w)).length;
+    if (score >= 2 && score > bestScore) {
+      bestScore = score;
+      bestMatch = val;
+    }
+  }
+  return bestMatch;
 }
 
 let tipIdx = 0;
