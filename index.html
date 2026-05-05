@@ -404,6 +404,397 @@
 </head>
 <body>
 
+    <h2>LaViCPA Tax Advisor</h2>
+    <p>Enter your Anthropic API key to activate the AI tax assistant. Your key is stored only in your browser session and never sent anywhere except directly to Anthropic.</p>
+    <label>Anthropic API Key</label>
+    <input type="text" id="apiKeyInput" placeholder="sk-ant-..." onkeydown="if(event.key==='Enter')saveKey()" />
+    <button class="modal-btn" onclick="saveKey()">Activate Assistant →</button>
+    <p class="modal-note">Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+  </div>
+</div>
+
+<div class="page">
+  <header>
+    <div class="header-left">
+      <div class="logo-mark"><span>LV</span></div>
+      <div class="header-brand">
+        <div class="name">LaViCPA · AI Tax Advisor</div>
+        <div class="sub">Los Angeles · Boutique Tax & Advisory</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot"></div>
+      <span class="status-text">AI Online</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-section" style="margin-top:1rem;">
+        <div class="sidebar-label">Client Specialty</div>
+        <button class="specialty-btn active" data-key="realestate" onclick="switchSpec(this)">
+          <div class="spec-icon">🏢</div>
+          <div class="spec-text">
+            <div class="title">Real Estate</div>
+            <div class="desc">Investors & landlords</div>
+          </div>
+        </button>
+        <button class="specialty-btn" data-key="agriculture" onclick="switchSpec(this)">
+          <div class="spec-icon">🌾</div>
+          <div class="spec-text">
+            <div class="title">Agriculture</div>
+            <div class="desc">Farm operators</div>
+          </div>
+        </button>
+        <button class="specialty-btn" data-key="hnw" onclick="switchSpec(this)">
+          <div class="spec-icon">💼</div>
+          <div class="spec-text">
+            <div class="title">HNW Planning</div>
+            <div class="desc">Wealth & estate strategy</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="quick-questions" id="qqList">
+        <div class="sidebar-label">Quick Questions</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="sidebar-tip" id="rotatingTip">
+        <strong>💡 Did you know?</strong> Cost segregation can accelerate depreciation on commercial property, often creating six-figure first-year deductions for real estate investors.
+      </div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="chat-area">
+      <div class="chat-header">
+        <div>
+          <div class="chat-header-title" id="chatTitle">Real Estate Tax Advisory</div>
+          <div class="chat-header-sub">1031 exchanges · Depreciation · Passive losses · Entity structuring</div>
+        </div>
+        <button class="clear-btn" onclick="clearChat()">Clear chat</button>
+      </div>
+
+      <div class="messages" id="msgs">
+        <div class="msg bot">
+          <div class="avatar bot-av">LV</div>
+          <div class="bubble">Good day. I'm LaViCPA's AI Tax Advisor — a specialized assistant for real estate investors, agricultural operators, and high-net-worth individuals. Select a specialty in the left panel or ask me anything to get started.</div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-row">
+          <input type="text" id="qinput" placeholder="Ask a tax question…" onkeydown="if(event.key==='Enter')send()" />
+          <button class="send-btn" id="sendbtn" onclick="send()">
+            <svg viewBox="0 0 16 16"><path d="M2 8l12-6-4 6 4 6z"/></svg>
+          </button>
+        </div>
+        <div class="input-footer">
+          <span>For demonstration purposes only · Not legal or financial advice</span>
+          <span class="key-hint">Press <kbd>Enter</kbd> to send</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const SPECS = {
+  realestate: {
+    title: 'Real Estate Tax Advisory',
+    sub: '1031 exchanges · Depreciation · Passive losses · Entity structuring',
+    questions: [
+      'How does a 1031 exchange work and what are the deadlines?',
+      'What is a cost segregation study and who should get one?',
+      'How do passive activity loss rules affect my rental income?',
+      'What is the short-term rental exception for real estate professionals?',
+      'How does bonus depreciation work in 2024 and 2025?',
+      'Should I hold my rentals in an LLC or S-corp?',
+      'What triggers depreciation recapture when I sell a property?',
+      'How do Qualified Opportunity Zone investments work?',
+    ]
+  },
+  agriculture: {
+    title: 'Agricultural Tax Advisory',
+    sub: 'Section 179 · Farm deductions · USDA income · Succession planning',
+    questions: [
+      'Can I fully expense new farm equipment under Section 179?',
+      'How is crop insurance income taxed and can I defer it?',
+      'Should my farm use cash or accrual accounting?',
+      'Are USDA CRP payments taxable income?',
+      'How does a conservation easement create a tax deduction?',
+      'What are my options for passing farmland to my children tax-efficiently?',
+      'Can I deduct the cost of a barn or grain bin immediately?',
+      'How does farm income averaging work?',
+    ]
+  },
+  hnw: {
+    title: 'High-Net-Worth Tax Planning',
+    sub: 'Estate strategy · Trust structures · Capital gains · Wealth preservation',
+    questions: [
+      'What is the 2024 federal estate tax exemption and when does it sunset?',
+      'How does a GRAT work for transferring wealth to heirs?',
+      'What is an Intentionally Defective Grantor Trust (IDGT)?',
+      'How can I use charitable remainder trusts to reduce taxes?',
+      'What is the annual gift tax exclusion amount for 2024?',
+      'How do I minimize capital gains tax on a large stock sale?',
+      'What is a Family Limited Partnership and how does it reduce estate taxes?',
+      'Can a Qualified Opportunity Fund eliminate capital gains entirely?',
+    ]
+  }
+};
+
+const TIPS = [
+  '<strong>💡 Real Estate:</strong> Cost segregation can accelerate depreciation, often creating six-figure first-year deductions.',
+  '<strong>💡 1031 Tip:</strong> You must identify replacement property within 45 days and close within 180 days of selling.',
+  '<strong>💡 Agriculture:</strong> Section 179 allows full first-year expensing of qualifying farm equipment — up to $1.22M in 2024.',
+  '<strong>💡 Estate:</strong> The $13.61M exemption sunsets after 2025 — planning now is critical for HNW clients.',
+  '<strong>💡 Passive Losses:</strong> Real estate professionals who log 750+ hours annually can deduct unlimited rental losses.',
+  '<strong>💡 Opportunity Zones:</strong> Investments held 10+ years may eliminate tax on all appreciation entirely.',
+];
+
+
+let busy = false;
+let currentSpec = 'realestate';
+let tipIdx = 0;
+
+function saveKey() {
+  const val = document.getElementById('apiKeyInput').value.trim();
+  if (!val.startsWith('sk-')) { alert('Please enter a valid Anthropic API key (starts with sk-ant-...)'); return; }
+  apiKey = val;
+  document.getElementById('modalOverlay').style.display = 'none';
+  document.getElementById('qinput').focus();
+}
+
+function switchSpec(btn) {
+  document.querySelectorAll('.specialty-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentSpec = btn.dataset.key;
+  const s = SPECS[currentSpec];
+  document.getElementById('chatTitle').textContent = s.title;
+  document.querySelector('.chat-header-sub').textContent = s.sub;
+  renderQQ();
+}
+
+function renderQQ() {
+  const qs = SPECS[currentSpec].questions;
+  const el = document.getElementById('qqList');
+  el.innerHTML = '<div class="sidebar-label">Quick Questions</div>' +
+    qs.map(q => `<div class="qq-item" onclick="useQ(this)">${q}</div>`).join('');
+}
+
+function useQ(el) {
+  document.getElementById('qinput').value = el.textContent;
+  send();
+}
+
+function rotateTip() {
+  tipIdx = (tipIdx + 1) % TIPS.length;
+  document.getElementById('rotatingTip').innerHTML = TIPS[tipIdx];
+}
+setInterval(rotateTip, 7000);
+
+renderQQ();
+
+const ANSWERS = {
+  'how does a 1031 exchange work and what are the deadlines': `## 1031 Exchange — Tax-Deferred Real Estate Sales
+
+A §1031 exchange allows you to sell an investment property and defer all capital gains taxes by reinvesting the proceeds into a "like-kind" replacement property. There is no limit on how many times you can use this strategy, meaning taxes can be deferred indefinitely across a lifetime of real estate investing.
+
+**Key deadlines to know:**
+- **45 days** from closing to identify up to 3 potential replacement properties in writing
+- **180 days** from closing to actually close on the replacement property
+- Both deadlines are strict — missing either one disqualifies the entire exchange
+
+A Qualified Intermediary (QI) must hold the proceeds between transactions; you cannot touch the funds yourself. LaViCPA works with clients to structure exchanges in advance so there are no surprises at closing.`,
+
+  'what is a cost segregation study and who should get one': `## Cost Segregation Studies
+
+A cost segregation study is an engineering-based tax analysis that reclassifies components of a commercial or residential rental property from 27.5 or 39-year depreciation schedules into 5, 7, or 15-year property. This dramatically accelerates depreciation deductions into the early years of ownership.
+
+**Who benefits most:**
+- Owners of commercial property valued at $500K or more
+- Investors who recently purchased, constructed, or renovated a property
+- High-income taxpayers who can use the additional losses immediately
+
+A typical study on a $2M property can generate $150K–$400K in additional first-year deductions. When combined with bonus depreciation (60% in 2024), the impact is even larger. LaViCPA recommends cost segregation for virtually every commercial acquisition above $500K.`,
+
+  'how do passive activity loss rules affect my rental income': `## Passive Activity Loss Rules (§469)
+
+Rental activities are automatically classified as passive under §469, which means losses can only offset other passive income — not your W-2 wages or business income. Unused passive losses carry forward indefinitely until you either generate passive income or sell the property.
+
+**Two major exceptions:**
+- **$25,000 allowance:** If your AGI is under $100K, you can deduct up to $25K in rental losses against ordinary income. This phases out completely at $150K AGI.
+- **Real Estate Professional status:** If you spend more than 750 hours per year in real estate activities and it represents more than 50% of your working time, rental losses become fully deductible — this is one of the most powerful tax strategies available to serious investors.
+
+LaViCPA helps clients document their hours and structure their activities to qualify for REP status where possible.`,
+
+  'what is the short-term rental exception for real estate professionals': `## Short-Term Rental Exception
+
+Properties where the average guest stay is **7 days or less** are not classified as rental activities under the passive activity rules — they're treated as a business activity. This means losses are not automatically passive and can potentially offset your ordinary income.
+
+To fully unlock this benefit you must **materially participate** in the property — generally meaning you spend more than 100 hours managing it and more than anyone else does. If you meet that threshold, losses from the STR flow directly to your tax return and offset W-2 or other active income with no AGI limitation.
+
+This is a significant strategy for high-income clients who own Airbnb-style properties and actively manage them. LaViCPA structures STR ownership specifically to maximize material participation documentation.`,
+
+  'how does bonus depreciation work in 2024 and 2025': `## Bonus Depreciation Phase-Out Schedule
+
+Bonus depreciation allows you to immediately expense a percentage of qualifying property (5, 7, and 15-year assets) in the year placed in service rather than depreciating it over its useful life.
+
+**Current phase-out schedule:**
+- 2023: 80%
+- **2024: 60%**
+- 2025: 40%
+- 2026: 20%
+- 2027+: 0% (unless Congress acts)
+
+For real estate investors, bonus depreciation is most powerful when combined with a cost segregation study — the study identifies short-life assets, and bonus depreciation then allows immediate expensing of those assets. A $3M property with a cost seg study could generate $300K–$600K in year-one deductions at the 60% rate. LaViCPA strongly advises clients to accelerate acquisitions while rates remain meaningful.`,
+
+  'should i hold my rentals in an llc or s-corp': `## LLC vs S-Corp for Rental Properties
+
+For passive rental properties, an **LLC taxed as a disregarded entity or partnership** is almost always the better choice. Rentals do not generate self-employment income, so the S-corp's payroll tax savings — the main reason to use one — don't apply. An S-corp also creates complications around real estate professional status and §1031 exchanges.
+
+**LLC advantages for rentals:**
+- Pass-through taxation with no additional complexity
+- Liability protection for each property
+- Flexible ownership and profit-sharing structures
+- Clean §1031 exchange treatment
+- No required payroll or reasonable compensation issues
+
+The exception: if you're running a short-term rental operation with significant service components (cleaning, concierge), an S-corp may offer payroll tax savings on the active income portion. LaViCPA evaluates entity structure on a client-by-client basis based on income level, number of properties, and activity type.`,
+
+  'can i fully expense new farm equipment under section 179': `## Section 179 for Farm Equipment
+
+Yes — qualifying farm equipment and machinery is eligible for full first-year expensing under §179. The 2024 deduction limit is **$1.22 million**, with a phase-out beginning at $3.05 million in total asset purchases.
+
+**What qualifies:**
+- Tractors, combines, planters, sprayers, and other farm machinery
+- Livestock (single-purpose agricultural structures)
+- Drainage tile and certain land improvements
+- Farm storage facilities (bins, silos) in some cases
+
+§179 is limited to your net farm income — you cannot use it to create a loss. However, any unused §179 carries forward to future years. When combined with bonus depreciation (60% in 2024 on any remaining basis), most equipment purchases can be fully expensed in year one. LaViCPA coordinates §179 elections with overall farm income projections to maximize the benefit each year.`,
+
+  'how is crop insurance income taxed and can i defer it': `## Crop Insurance Income & Deferral Election
+
+Crop insurance proceeds are taxable income in the year received. However, farmers have a valuable election under §451(f) to **defer crop insurance income to the following tax year** if the crops would normally have been sold in that subsequent year.
+
+**To qualify for deferral:**
+- You must use the cash method of accounting
+- You must show that under normal business practice, the crops would have been sold in the following year
+- The election must be made on a timely filed return
+
+This is particularly valuable when a large insurance payment pushes you into a higher bracket in a low-income year. By deferring to a year with more offsetting deductions or lower income, the effective tax rate on the proceeds can be significantly reduced. LaViCPA proactively plans crop insurance elections each fall before year-end.`,
+
+  'what is the 2024 federal estate tax exemption and when does it sunset': `## 2024 Estate Tax Exemption & Sunset
+
+The federal estate and gift tax exemption for 2024 is **$13.61 million per individual** ($27.22 million for married couples with portability). This means you can transfer up to $13.61M during life or at death completely free of federal estate tax.
+
+**The critical sunset:** Under current law, the Tax Cuts and Jobs Act provisions expire after December 31, 2025. The exemption is scheduled to drop to approximately **$7 million per person** (inflation-adjusted) starting January 1, 2026 — cutting the exemption nearly in half overnight.
+
+For high-net-worth clients, this creates an urgent planning window. Strategies to use the exemption before sunset include:
+- Large lifetime gifts to irrevocable trusts (IDGTs, SLATs)
+- Accelerating GRATs and other freeze techniques
+- Funding dynasty trusts for multi-generational transfers
+
+LaViCPA is actively working with HNW clients now to capture the full $13.61M exemption before the 2025 deadline.`,
+
+  'how does a grat work for transferring wealth to heirs': `## Grantor Retained Annuity Trusts (GRATs)
+
+A GRAT is an irrevocable trust where you transfer assets, receive back an annuity payment for a fixed term, and pass any appreciation above the IRS hurdle rate (§7520 rate) to heirs completely gift-tax free.
+
+**How it works:**
+1. You transfer $5M in appreciating assets to the GRAT
+2. You receive annuity payments back over 2–10 years
+3. If the assets grow faster than the IRS §7520 rate (currently ~5%), the excess passes to heirs tax-free
+4. If you survive the trust term, all appreciation escapes your estate
+
+GRATs are most effective with high-growth assets — private equity, concentrated stock positions, or real estate — where returns are likely to significantly exceed the hurdle rate. A "zeroed-out" GRAT minimizes upfront gift tax to nearly zero. LaViCPA structures GRATs specifically around clients' highest-appreciation assets.`,
+
+  'what are my options for passing farmland to my children tax efficiently': `## Farm Succession Planning — Tax-Efficient Transfers
+
+Transferring farmland to the next generation requires balancing estate taxes, income taxes, and operational continuity. Several strategies work particularly well for agricultural families:
+
+**Special Use Valuation (§2032A):** Farmland can be valued at its agricultural use value rather than fair market value for estate tax purposes, potentially reducing the taxable estate by up to **$1.39 million** (2024 limit). Heirs must continue farming for 10 years.
+
+**Installment Sales to Children:** Selling the farm on installment spreads gain recognition over time and keeps cash in the operation. Paired with a self-canceling installment note (SCIN), the remaining balance cancels at death.
+
+**Family Limited Partnership (FLP):** Transferring farmland into an FLP allows annual gifting of partnership interests at discounted values (typically 20–40% discount for lack of marketability), effectively moving more assets out of the estate per year.
+
+**Conservation Easements:** Donating development rights while retaining agricultural use generates a charitable deduction and permanently reduces land value for estate purposes.
+
+LaViCPA recommends starting succession planning at least 10 years before transition to maximize every available strategy.`
+};
+
+function findAnswer(q) {
+  const normalized = q.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
+  for (const [key, val] of Object.entries(ANSWERS)) {
+    const keyWords = key.split(' ');
+    const matchCount = keyWords.filter(w => w.length > 3 && normalized.includes(w)).length;
+    if (matchCount >= 3) return val;
+  }
+  return null;
+}
+
+const msgsEl = document.getElementById('msgs');
+const input = document.getElementById('qinput');
+const btn = document.getElementById('sendbtn');
+let busy = false;
+
+function addMsg(role, text) {
+  const isBot = role === 'assistant';
+  const div = document.createElement('div');
+  div.className = 'msg ' + (isBot ? 'bot' : 'user');
+  const rendered = isBot ? marked.parse(text) : text.replace(/</g,'&lt;');
+  div.innerHTML = `<div class="avatar ${isBot?'bot-av':'user-av'}">${isBot?'LV':'You'}</div><div class="bubble">${rendered}</div>`;
+  msgsEl.appendChild(div);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+
+function addTyping() {
+  const div = document.createElement('div');
+  div.className = 'msg bot'; div.id = 'typing';
+  div.innerHTML = `<div class="avatar bot-av">LV</div><div class="typing-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+  msgsEl.appendChild(div);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+
+function removeTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function clearChat() {
+  msgsEl.innerHTML = '';
+  addMsg('assistant', 'Chat cleared. How can I help you today?');
+}
+
+async function send() {
+  const q = input.value.trim();
+  if (!q || busy) return;
+  busy = true; btn.disabled = true; input.value = '';
+  addMsg('user', q);
+  addTyping();
+
+  await new Promise(r => setTimeout(r, 900));
+  removeTyping();
+
+  const answer = findAnswer(q);
+  if (answer) {
+    addMsg('assistant', answer);
+  } else {
+    addMsg('assistant', `Thank you for your question. For personalized guidance on **${q.toLowerCase()}**, I'd recommend speaking directly with one of our senior advisors at LaViCPA. Our team specializes in real estate investors, agricultural operators, and high-net-worth individuals across California and nationwide.
+
+Feel free to explore the quick questions in the left panel for detailed answers on our most common topics.`);
+  }
+
+  busy = false; btn.disabled = false; input.focus();
+}
+</script>
+</head>
+<body>
+
 <!-- API KEY MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -561,8 +952,7 @@ const TIPS = [
   '<strong>💡 Opportunity Zones:</strong> Investments held 10+ years may eliminate tax on all appreciation entirely.',
 ];
 
-let apiKey = '';
-let history = [];
+
 let busy = false;
 let currentSpec = 'realestate';
 let tipIdx = 0;
@@ -648,7 +1038,7 @@ function clearChat() {
 async function send() {
   const q = input.value.trim();
   if (!q || busy) return;
-  if (!apiKey) { document.getElementById('modalOverlay').style.display = 'flex'; return; }
+  
   busy = true; btn.disabled = true; input.value = '';
   addMsg('user', q);
   history.push({ role: 'user', content: q });
