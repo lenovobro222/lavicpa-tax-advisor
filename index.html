@@ -333,63 +333,6 @@
     background: white;
   }
 
-  /* ── API KEY MODAL ── */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(10,31,16,0.7);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 100;
-    backdrop-filter: blur(4px);
-  }
-  .modal {
-    background: white;
-    border-radius: var(--radius);
-    padding: 2rem;
-    max-width: 440px;
-    width: 90%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-  }
-  .modal-logo {
-    width: 48px; height: 48px;
-    background: var(--green-mid);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.25rem;
-  }
-  .modal-logo span { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--green-light); }
-  .modal h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--green-accent); margin-bottom: 6px; }
-  .modal p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem; }
-  .modal label { display: block; font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 0.3px; }
-  .modal input[type=text] {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    font-size: 13.5px;
-    font-family: monospace;
-    color: var(--text-primary);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .modal input[type=text]:focus { border-color: var(--green-accent); box-shadow: 0 0 0 3px rgba(26,92,53,0.08); }
-  .modal-btn {
-    width: 100%;
-    margin-top: 1rem;
-    padding: 12px;
-    background: var(--green-mid);
-    color: var(--green-pale);
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .modal-btn:hover { background: var(--green-accent); }
-  .modal-note { font-size: 11px; color: var(--text-muted); margin-top: 10px; text-align: center; }
-  .modal-note a { color: var(--green-accent); text-decoration: none; }
-
   /* scrollbar */
   .messages::-webkit-scrollbar, .sidebar::-webkit-scrollbar { width: 4px; }
   .messages::-webkit-scrollbar-track, .sidebar::-webkit-scrollbar-track { background: transparent; }
@@ -403,15 +346,6 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-
-    <h2>LaViCPA Tax Advisor</h2>
-    <p>Enter your Anthropic API key to activate the AI tax assistant. Your key is stored only in your browser session and never sent anywhere except directly to Anthropic.</p>
-    <label>Anthropic API Key</label>
-    <input type="text" id="apiKeyInput" placeholder="sk-ant-..." onkeydown="if(event.key==='Enter')saveKey()" />
-    <button class="modal-btn" onclick="saveKey()">Activate Assistant →</button>
-    <p class="modal-note">Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
-  </div>
-</div>
 
 <div class="page">
   <header>
@@ -562,12 +496,7 @@ let busy = false;
 let currentSpec = 'realestate';
 let tipIdx = 0;
 
-function saveKey() {
-  const val = document.getElementById('apiKeyInput').value.trim();
-  if (!val.startsWith('sk-')) { alert('Please enter a valid Anthropic API key (starts with sk-ant-...)'); return; }
-  apiKey = val;
-  document.getElementById('modalOverlay').style.display = 'none';
-  document.getElementById('qinput').focus();
+      document.getElementById('qinput').focus();
 }
 
 function switchSpec(btn) {
@@ -795,17 +724,6 @@ Feel free to explore the quick questions in the left panel for detailed answers 
 </head>
 <body>
 
-<!-- API KEY MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-logo"><span>LV</span></div>
-    <h2>LaViCPA Tax Advisor</h2>
-    <p>Enter your Anthropic API key to activate the AI tax assistant. Your key is stored only in your browser session and never sent anywhere except directly to Anthropic.</p>
-    <label>Anthropic API Key</label>
-    <input type="text" id="apiKeyInput" placeholder="sk-ant-..." onkeydown="if(event.key==='Enter')saveKey()" />
-    <button class="modal-btn" onclick="saveKey()">Activate Assistant →</button>
-    <p class="modal-note">Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
-  </div>
 </div>
 
 <div class="page">
@@ -957,13 +875,7 @@ let busy = false;
 let currentSpec = 'realestate';
 let tipIdx = 0;
 
-function saveKey() {
-  const val = document.getElementById('apiKeyInput').value.trim();
-  if (!val.startsWith('sk-')) { alert('Please enter a valid Anthropic API key (starts with sk-ant-...)'); return; }
-  apiKey = val;
-  document.getElementById('modalOverlay').style.display = 'none';
-  document.getElementById('qinput').focus();
-}
+
 
 function switchSpec(btn) {
   document.querySelectorAll('.specialty-btn').forEach(b => b.classList.remove('active'));
@@ -1049,8 +961,7 @@ async function send() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
+                'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
