@@ -888,12 +888,19 @@ LaViCPA builds a comprehensive strategy around each client's income, assets, and
 
 function findAnswer(q) {
   const normalized = q.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/  +/g, ' ').trim();
+  const words = normalized.split(' ');
   // First pass: check each pipe-separated variant
   for (const [key, val] of Object.entries(ANSWERS)) {
     const variants = key.split('|').map(v => v.trim());
     for (const variant of variants) {
       const cleanVariant = variant.replace(/[^a-z0-9 ]/g, ' ').replace(/  +/g, ' ').trim();
-      if (normalized.includes(cleanVariant)) return val;
+      const variantWords = cleanVariant.split(' ');
+      // For single short words, require exact whole-word match
+      if (variantWords.length === 1 && variantWords[0].length <= 4) {
+        if (words.includes(variantWords[0])) return val;
+      } else {
+        if (normalized.includes(cleanVariant)) return val;
+      }
     }
   }
   // Second pass: word overlap scoring
