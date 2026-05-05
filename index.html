@@ -494,13 +494,13 @@ const TIPS = [
 const ANSWERS = {
   '1031 exchange': `## 1031 Exchange — Tax-Deferred Real Estate Sales
 
-A §1031 exchange allows you to sell an investment property and defer all capital gains taxes by reinvesting proceeds into a like-kind replacement property.
+A §1031 exchange lets you sell an investment property and defer all capital gains taxes by reinvesting proceeds into a like-kind replacement property. There is no limit on how many times you can use this strategy.
 
 **Key deadlines:**
 - **45 days** from closing to identify up to 3 replacement properties in writing
 - **180 days** from closing to close on the replacement property
 
-A Qualified Intermediary must hold the proceeds — you cannot touch the funds. LaViCPA works with clients to structure exchanges in advance so there are no surprises at closing.`,
+A Qualified Intermediary must hold the proceeds — you cannot touch the funds yourself. LaViCPA structures exchanges in advance so there are no surprises at closing.`,
 
   'cost segregation': `## Cost Segregation Studies
 
@@ -508,109 +508,264 @@ A cost segregation study reclassifies building components from 27.5 or 39-year d
 
 **Who benefits most:**
 - Owners of commercial property valued at $500K+
-- Investors who recently purchased, constructed, or renovated a property
+- Investors who recently purchased, constructed, or renovated
 - High-income taxpayers who can use losses immediately
 
-A typical study on a $2M property generates $150K–$400K in additional first-year deductions. LaViCPA recommends cost segregation for virtually every commercial acquisition above $500K.`,
+A typical study on a $2M property generates $150K–$400K in first-year deductions. Combined with 60% bonus depreciation in 2024, the impact is enormous. LaViCPA recommends cost segregation for virtually every commercial acquisition above $500K.`,
 
-  'passive activity': `## Passive Activity Loss Rules (§469)
+  'passive': `## Passive Activity Loss Rules (§469)
 
-Rental activities are automatically classified as passive, meaning losses can only offset other passive income — not W-2 wages.
+Rental activities are automatically classified as passive, meaning losses can only offset other passive income — not W-2 wages or business income.
 
 **Two major exceptions:**
-- **$25,000 allowance:** If AGI is under $100K, you can deduct up to $25K in rental losses against ordinary income (phases out at $150K)
-- **Real Estate Professional:** 750+ hours per year in real estate activities unlocks unlimited loss deductions
+- **$25,000 allowance:** If AGI is under $100K, deduct up to $25K in rental losses against ordinary income (phases out at $150K)
+- **Real Estate Professional:** 750+ hours per year in real estate unlocks unlimited loss deductions against all income
 
-LaViCPA helps clients document hours and structure activities to qualify for REP status where possible.`,
+LaViCPA helps clients document hours and structure activities to qualify for REP status.`,
 
   'short-term rental': `## Short-Term Rental Exception
 
-Properties where the average guest stay is **7 days or less** are treated as a business activity, not passive rental. Losses can offset ordinary income if you materially participate (100+ hours managing, more than anyone else).
+Properties where the average guest stay is **7 days or less** are treated as a business, not passive rental. Losses can offset ordinary income if you materially participate (100+ hours, more than anyone else).
 
-This is a significant strategy for high-income clients who own Airbnb-style properties and actively manage them. LaViCPA structures STR ownership to maximize material participation documentation.`,
+This is a major strategy for high-income clients who own Airbnb-style properties. LaViCPA structures STR ownership to maximize material participation documentation.`,
 
   'bonus depreciation': `## Bonus Depreciation Phase-Out Schedule
-
-Bonus depreciation allows immediate expensing of qualifying property placed in service.
 
 **Current schedule:**
 - 2024: **60%**
 - 2025: 40%
 - 2026: 20%
-- 2027+: 0% (unless Congress acts)
+- 2027+: 0%
 
-Most powerful when combined with a cost segregation study. A $3M property with a cost seg could generate $300K–$600K in year-one deductions at 60%. LaViCPA advises clients to accelerate acquisitions while rates remain meaningful.`,
+Most powerful when combined with a cost segregation study. A $3M property could generate $300K–$600K in year-one deductions. LaViCPA advises clients to accelerate acquisitions while rates remain meaningful.`,
 
-  'llc or s-corp': `## LLC vs S-Corp for Rental Properties
+  'llc': `## LLC vs S-Corp for Rental Properties
 
 For passive rental properties, an **LLC** is almost always the better choice. Rentals don't generate self-employment income, so the S-corp's payroll tax savings don't apply.
 
 **LLC advantages:**
-- Pass-through taxation with no complexity
+- Pass-through taxation, no payroll complexity
 - Liability protection per property
 - Clean §1031 exchange treatment
-- No required payroll obligations
 
-The exception: short-term rental operations with significant service components may benefit from S-corp treatment. LaViCPA evaluates entity structure based on income level, number of properties, and activity type.`,
+The exception: short-term rentals with significant service components may benefit from S-corp treatment. LaViCPA evaluates entity structure based on each client's full picture.`,
+
+  'depreciation recapture': `## Depreciation Recapture on Sale
+
+When you sell a rental property, the IRS recaptures the depreciation you've taken at a **25% rate** (§1250 recapture), while any remaining gain above your original cost basis is taxed at long-term capital gains rates.
+
+**Strategies to minimize recapture:**
+- **1031 exchange** — defer all gain and recapture indefinitely
+- **Installment sale** — spread recapture over multiple years
+- **Opportunity Zone investment** — defer gain into a QOF
+- **Die holding** — heirs receive a stepped-up basis, eliminating all recapture
+
+LaViCPA models the full tax impact before any property sale so clients make informed decisions.`,
+
+  'opportunity zone': `## Qualified Opportunity Zone Investments
+
+Opportunity Zone funds allow you to defer capital gains from any asset sale by reinvesting into a Qualified Opportunity Fund (QOF) within 180 days.
+
+**Tax benefits:**
+- **Deferral** of original gain until 2026 or until you sell the QOF interest
+- **Elimination** of all appreciation on the QOF investment if held 10+ years
+
+This means if you invest $500K of gains into a QOF and it grows to $1.2M over 10 years, the $700K of new appreciation is completely tax-free. LaViCPA identifies high-quality QOF opportunities for clients with large capital gain events.`,
 
   'section 179': `## Section 179 for Farm Equipment
 
 Qualifying farm equipment is eligible for full first-year expensing. The **2024 limit is $1.22 million**, with phase-out beginning at $3.05M in total purchases.
 
-**What qualifies:** Tractors, combines, planters, sprayers, and other farm machinery.
+**What qualifies:** Tractors, combines, planters, sprayers, drainage tile, and other farm machinery.
 
-§179 is limited to net farm income — it cannot create a loss. Combined with 60% bonus depreciation in 2024, most equipment purchases can be fully expensed in year one. LaViCPA coordinates §179 elections with overall farm income projections each year.`,
+§179 cannot create a loss — it's limited to net farm income. Combined with 60% bonus depreciation, most equipment can be fully expensed in year one. LaViCPA coordinates §179 elections with overall income projections each year.`,
 
   'crop insurance': `## Crop Insurance Income & Deferral
 
-Crop insurance proceeds are taxable, but farmers can **defer income to the following year** under §451(f) if crops would normally have been sold then.
+Crop insurance proceeds are taxable, but farmers can **defer income to the following year** under §451(f) if the crops would normally have been sold then.
 
 **To qualify:**
 - Must use cash method of accounting
-- Must show crops would normally be sold the following year
-- Election must be made on a timely filed return
+- Crops would normally be sold the following year
+- Election made on a timely filed return
 
-This is valuable when a large payment pushes you into a higher bracket. LaViCPA proactively plans crop insurance elections each fall before year-end.`,
+This prevents a large insurance payment from pushing you into a higher bracket in a low-income year. LaViCPA plans crop insurance elections proactively each fall.`,
 
-  'estate tax exemption': `## 2024 Estate Tax Exemption & Sunset
+  'cash or accrual': `## Cash vs Accrual Accounting for Farms
 
-The 2024 federal exemption is **$13.61 million per individual** ($27.22M for married couples). Assets below this threshold pass estate-tax free.
+Most small to mid-size farms use the **cash method**, which offers significant tax flexibility — you can time income and deductions by controlling when you receive payments or make purchases.
 
-**Critical sunset:** The exemption drops to ~$7M per person after December 31, 2025 — cutting it nearly in half overnight.
+**Cash method advantages:**
+- Defer grain sales to shift income to a lower-tax year
+- Prepay expenses (seed, fertilizer) to accelerate deductions
+- Simpler record-keeping
 
-Strategies to use before sunset include lifetime gifts to irrevocable trusts, GRATs, and dynasty trusts. LaViCPA is actively working with HNW clients now to capture the full exemption before the deadline.`,
+Farms with average gross receipts over $30M must use accrual. For those under the threshold, cash accounting combined with strategic year-end planning is a powerful tax tool. LaViCPA helps farm clients maximize timing flexibility each December.`,
 
-  'grat': `## Grantor Retained Annuity Trusts (GRATs)
+  'crp': `## USDA CRP and Program Payments
 
-A GRAT transfers assets to an irrevocable trust. You receive annuity payments back, and any growth above the IRS §7520 hurdle rate passes to heirs completely gift-tax free.
+Conservation Reserve Program (CRP) payments are generally taxable as ordinary income. However, they are **not subject to self-employment tax** if the landowner is not otherwise engaged in farming — a meaningful distinction for retired farmers or investors.
 
-**How it works:**
-1. Transfer $5M in appreciating assets to the GRAT
-2. Receive annuity payments back over 2–10 years
-3. Growth above the hurdle rate passes to heirs tax-free
+Other USDA program payments (ARC, PLC) are generally ordinary income subject to SE tax if you're an active farmer. LaViCPA structures farm ownership to minimize SE tax on government payments wherever legally possible.`,
 
-Most effective with high-growth assets — private equity, concentrated stock, or real estate. LaViCPA structures GRATs around clients' highest-appreciation assets.`,
+  'conservation easement': `## Conservation Easements
+
+A conservation easement donates development rights on your land to a qualified land trust, generating a charitable deduction equal to the difference between the land's unrestricted value and its restricted (agricultural) value.
+
+**Benefits:**
+- Large charitable deduction (often 3–5x the cash investment in syndicated deals)
+- Permanently reduces estate value of the land
+- Land remains in your ownership and can still be farmed
+
+The IRS heavily scrutinizes syndicated conservation easements — LaViCPA only works with properly structured, defensible easements with qualified appraisals.`,
 
   'farmland': `## Farm Succession Planning
 
-**Key strategies:**
-- **Special Use Valuation (§2032A):** Value farmland at agricultural use value, reducing taxable estate by up to $1.39M (2024)
-- **Installment Sales:** Spread gain recognition over time, keeping cash in the operation
-- **Family Limited Partnership:** Gift partnership interests at 20–40% discounts for lack of marketability
-- **Conservation Easements:** Donate development rights, generate charitable deduction, reduce estate value
+**Key strategies for passing farmland tax-efficiently:**
 
-LaViCPA recommends starting succession planning at least 10 years before transition to maximize every available strategy.`
+- **Special Use Valuation (§2032A):** Value farmland at agricultural use value, reducing taxable estate by up to $1.39M (2024 limit). Heirs must continue farming for 10 years.
+- **Installment Sales:** Spread gain recognition over time, keeping cash in the operation
+- **Family Limited Partnership:** Gift interests at 20–40% valuation discounts
+- **Conservation Easements:** Reduce estate value while retaining farming rights
+
+LaViCPA recommends starting succession planning at least 10 years before transition.`,
+
+  'high net worth|hnw|hnwi|wealthy|save money|tax break|reduce tax|lower tax|minimize tax|save on tax|tax strategy|tax savings|best tax': `## High-Net-Worth Tax Strategy — Maximum Savings
+
+For high-net-worth individuals, the biggest opportunities are:
+
+**Estate Planning (act before 2026):**
+The $13.61M exemption sunsets to ~$7M after 2025. Execute lifetime gifts to irrevocable trusts (GRATs, IDGTs, SLATs) now to lock in the higher exemption permanently.
+
+**Capital Gains Management:**
+- Harvest losses to offset gains throughout the year
+- Invest gains into Qualified Opportunity Zone funds to defer and potentially eliminate tax
+- Consider installment sales for large asset disposals
+
+**Charitable Strategies:**
+- Donor-Advised Funds: Immediate deduction, invest assets tax-free, distribute to charity over time
+- Charitable Remainder Trusts: Convert appreciated assets into an income stream with an upfront deduction
+
+**Investment Structure:**
+- Municipal bonds for tax-free income at high brackets
+- Real estate for depreciation losses that offset other income
+- Oil & gas working interests for immediate intangible drilling cost deductions
+
+**Annual Gifting:**
+The 2024 annual exclusion is $18,000 per recipient — a married couple can gift $36,000 per child per year with zero gift tax impact.
+
+LaViCPA builds a comprehensive tax strategy around each client's full income picture, asset base, and estate goals.`,
+
+  'estate tax exemption|estate planning|estate strategy': `## 2024 Estate Tax Exemption & Sunset
+
+The 2024 federal exemption is **$13.61 million per individual** ($27.22M for married couples with portability).
+
+**Critical sunset:** Drops to ~$7M per person after December 31, 2025 — nearly half overnight.
+
+**Strategies to use before sunset:**
+- Large lifetime gifts to irrevocable trusts
+- GRATs and IDGTs for freeze techniques
+- Dynasty trusts for multi-generational transfers
+
+LaViCPA is actively working with HNW clients now to capture the full exemption before the deadline.`,
+
+  'grat|grantor retained': `## Grantor Retained Annuity Trusts (GRATs)
+
+You transfer assets to a GRAT, receive annuity payments back, and any growth above the IRS §7520 hurdle rate (~5%) passes to heirs completely gift-tax free.
+
+Most effective with high-growth assets — private equity, concentrated stock, or real estate. A zeroed-out GRAT minimizes upfront gift tax to nearly zero. LaViCPA structures GRATs around clients' highest-appreciation assets.`,
+
+  'idgt|intentionally defective|grantor trust': `## Intentionally Defective Grantor Trusts (IDGTs)
+
+An IDGT is an irrevocable trust that is outside your estate for estate tax purposes, but you still pay income tax on trust earnings. This is intentional — paying the income tax is a tax-free gift to the trust beneficiaries, further reducing your estate.
+
+**Key uses:**
+- Installment sale of appreciated assets to the trust (no capital gains on the sale)
+- Freeze the value of assets in your estate while future appreciation passes to heirs
+- You pay income tax on trust earnings, which further reduces your taxable estate
+
+IDGTs are one of the most powerful estate freeze techniques available. LaViCPA structures IDGTs in coordination with business succession and real estate planning.`,
+
+  'charitable|donor advised|crt|philanthropy|donate': `## Charitable Giving Strategies for HNW Clients
+
+**Donor-Advised Funds (DAFs):**
+Contribute cash or appreciated assets, take an immediate deduction, invest the funds tax-free, and distribute to charities over time. Ideal for bunching deductions in high-income years.
+
+**Charitable Remainder Trusts (CRTs):**
+Transfer appreciated assets to a CRT, avoid immediate capital gains, receive an income stream for life, and pass the remainder to charity. Generates a partial upfront charitable deduction.
+
+**Charitable Lead Annuity Trusts (CLATs):**
+Charity receives income first; heirs receive remainder after the trust term — often passing significant wealth gift-tax free.
+
+**Qualified Charitable Distributions (QCDs):**
+If you're 70½+, donate up to $105,000 directly from your IRA to charity — counts toward your RMD and is excluded from taxable income entirely.
+
+LaViCPA integrates charitable strategies with overall estate and income tax planning for maximum impact.`,
+
+  'gift tax|annual exclusion|gifting': `## Gift Tax & Annual Exclusion Strategies
+
+The **2024 annual gift tax exclusion is $18,000 per recipient** ($36,000 for married couples splitting gifts). These gifts require no filing and have zero gift tax impact.
+
+**Strategies beyond the annual exclusion:**
+- **529 superfunding:** Contribute up to 5 years of exclusions at once ($90,000 per beneficiary) for education savings
+- **Direct tuition/medical payments:** Unlimited exclusion when paid directly to institutions
+- **Lifetime exemption gifts:** Use a portion of your $13.61M exemption now before the 2025 sunset
+
+LaViCPA builds systematic gifting programs for HNW clients that maximize wealth transfer each year with zero gift tax cost.`,
+
+  'capital gains|sell stock|appreciated assets': `## Capital Gains Tax Strategies
+
+**Timing strategies:**
+- Hold assets 12+ months for long-term rates (0%, 15%, or 20% depending on income)
+- Harvest losses in December to offset gains dollar-for-dollar
+- Bunch gains in years with unusually high deductions
+
+**Deferral strategies:**
+- **1031 exchange** for real estate — defer indefinitely
+- **Qualified Opportunity Zone funds** — defer gain to 2026, eliminate appreciation tax after 10 years
+- **Installment sales** — spread gain over multiple years
+
+**Elimination strategies:**
+- **Charitable donations** of appreciated assets — deduct fair market value, pay zero capital gains
+- **Step-up in basis** at death — heirs inherit at current value with no embedded gains
+- **Opportunity Zone 10-year hold** — all new appreciation permanently tax-free
+
+LaViCPA models all options before any major asset sale to identify the optimal strategy.`,
+
+  'rmd|ira|retirement|roth': `## Retirement Account Tax Strategies
+
+**RMD Planning:**
+Required Minimum Distributions begin at age 73. Strategies to reduce RMD tax impact include Roth conversions in low-income years, Qualified Charitable Distributions (up to $105K directly to charity, tax-free), and spreading conversions across years to stay in lower brackets.
+
+**Roth Conversion Strategy:**
+Converting traditional IRA funds to Roth during low-income years — retirement gap years, early retirement, years with large deductions — locks in lower rates permanently. All future Roth growth is tax-free.
+
+**Backdoor Roth:**
+High earners above the income limit can still contribute via the backdoor Roth method — contribute to a non-deductible IRA then immediately convert to Roth.
+
+LaViCPA models multi-year Roth conversion strategies to minimize lifetime tax on retirement assets.`,
+
+  'family limited partnership|flp|valuation discount': `## Family Limited Partnerships (FLPs)
+
+An FLP holds family assets (real estate, investments, business interests) and allows you to gift limited partnership interests at **valuation discounts of 20–40%** for lack of marketability and lack of control.
+
+**Example:** $10M in assets inside an FLP may be valued at $6–7M for gift tax purposes due to discounts — effectively transferring $10M while using only $6–7M of your exemption.
+
+**Additional benefits:**
+- Asset protection from creditors
+- Centralized management of family assets
+- Structured framework for next-generation involvement
+
+FLPs require careful setup and ongoing maintenance to withstand IRS scrutiny. LaViCPA structures FLPs with proper business purpose documentation and annual compliance.`
 };
 
 function findAnswer(q) {
-  const normalized = q.toLowerCase();
+  const normalized = q.toLowerCase().replace(/[^a-z0-9 |]/g, ' ').trim();
   for (const [key, val] of Object.entries(ANSWERS)) {
-    if (normalized.includes(key)) return val;
-  }
-  // Fuzzy word match fallback
-  for (const [key, val] of Object.entries(ANSWERS)) {
-    const words = key.split(' ');
-    if (words.every(w => normalized.includes(w))) return val;
+    const variants = key.split('|');
+    for (const variant of variants) {
+      if (normalized.includes(variant.trim())) return val;
+    }
   }
   return null;
 }
